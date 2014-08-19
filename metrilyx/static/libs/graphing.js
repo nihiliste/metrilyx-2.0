@@ -495,8 +495,8 @@ MetrilyxAnnotation.prototype.queueDataForRendering = function() {
     var ma = this;
     // wait until the chart has been initialized //
     var tout = setTimeout(function() {
-        var wchrt = $(ma._chartElem).highcharts();
-        if(wchrt === undefined) {
+        ma._chart = $(ma._chartElem).highcharts();
+        if(ma._chart === undefined) {
             clearTimeout(tout);
             $(ma._statusElem).html("<span class='small'>waiting for graph to initialize (annotations)...</span>");
             ma.queueDataForRendering();
@@ -505,9 +505,9 @@ MetrilyxAnnotation.prototype.queueDataForRendering = function() {
             // -- Unused
             //wsf = new SeriesFormatter(ma._data.annoEvents.data);
             var idx = -1;
-            for(var i in wchrt.series) {
-                if(wchrt.series[i].type === 'flags') {
-                    if(wchrt.series[i].name === ma._data.annoEvents.eventType) {
+            for(var i in ma._chart.series) {
+                if(ma._chart.series[i].type === 'flags') {
+                    if(ma._chart.series[i].name === ma._data.annoEvents.eventType) {
                         idx = i;
                         break;
                     }
@@ -515,7 +515,7 @@ MetrilyxAnnotation.prototype.queueDataForRendering = function() {
             }
             if(idx < 0) {
                 var sf = new SeriesFormatter(ma._data.annoEvents.data);
-                wchrt.addSeries(sf.flagsSeries(ma._data.annoEvents.eventType));
+                ma._chart.addSeries(sf.flagsSeries(ma._data.annoEvents.eventType));
             }
             else {
                 ma.appendData(idx);
