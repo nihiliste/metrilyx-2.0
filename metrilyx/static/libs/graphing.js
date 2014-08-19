@@ -518,7 +518,7 @@ MetrilyxAnnotation.prototype.queueDataForRendering = function() {
                 wchrt.addSeries(sf.flagsSeries(ma._data.annoEvents.eventType));
             }
             else {
-                ma.appendData(wchrt, idx);
+                ma.appendData(idx);
             }
         }
     }, 3000);

@@ -263,17 +263,17 @@ angular.module('graphing', [])
 				var data = event.detail;
 				checkDataErrors(data);
 				if (data.series) {
-					var mg = new MetrilyxGraph(data, scope.getTimeWindow(true));
-					mg.applyData();
-				}
+                                    var mg = new MetrilyxGraph(data, scope.getTimeWindow(true));
+                                    mg.applyData();
+                                    var sTags = (new SeriesFormatter(data.series)).seriesTags();
+                                    scope.$apply(function() {
+                                            scope.updateTagsOnPage(sTags)
+                                    });
+                                }
 				if (data.annoEvents && data.annoEvents.data && data.annoEvents.data.length > 0) {
 					anno = new MetrilyxAnnotation(data);
 					anno.applyData();
 				}
-				var sTags = (new SeriesFormatter(data.series)).seriesTags();
-				scope.$apply(function() {
-					scope.updateTagsOnPage(sTags)
-				});
 				setSerieStatus(data, 'loaded');
 			}
 
